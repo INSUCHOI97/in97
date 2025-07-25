@@ -1,0 +1,38 @@
+[
+  {
+    "question": "지구에서 가장 큰 대륙은?",
+    "choices": ["아프리카", "아시아", "유럽", "남아메리카"],
+    "answer": 1,
+    "level": "무식"
+  },
+  {
+    "question": "우리나라의 수도는?",
+    "choices": ["서울", "부산", "인천", "대전"],
+    "answer": 0,
+    "level": "무식"
+  },
+  {
+    "question": "빛의 속도는 약 얼마인가?",
+    "choices": ["300,000km/s", "150,000km/s", "1,000km/s", "3,000km/s"],
+    "answer": 0,
+    "level": "박사"
+  },
+  {
+    "question": "물의 화학식은?",
+    "choices": ["CO2", "H2O", "O2", "NaCl"],
+    "answer": 1,
+    "level": "평범"
+  },
+  {
+    "question": "대한민국의 첫 대통령은?",
+    "choices": ["김대중", "박정희", "이승만", "윤보선"],
+    "answer": 2,
+    "level": "평범"
+  },
+  {
+    "question": "피타고라스 정리는?",
+    "choices": ["a + b = c", "E = mc^2", "a^2 + b^2 = c^2", "F = ma"],
+    "answer": 2,
+    "level": "박사"
+  }
+]

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상식 퀴즈</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>상식 퀴즈</h1>
+    <div id="start-screen">
+      <button class="btn" onclick="startQuiz('무식')">무식</button>
+      <button class="btn" onclick="startQuiz('평범')">평범</button>
+      <button class="btn" onclick="startQuiz('박사')">박사</button>
+    </div>
+    <div id="quiz-screen" class="hidden">
+      <div id="question-box"></div>
+      <div id="choices-box"></div>
+    </div>
+    <div id="result-screen" class="hidden">
+      <h2 id="result-text"></h2>
+      <button class="btn" onclick="restartQuiz()">다시 풀기</button>
+    </div>
+  </div>
+  <script>
+const allQuestions = [
+  {
+    "question": "지구에서 가장 큰 대륙은?",
+    "choices": ["아프리카", "아시아", "유럽", "남아메리카"],
+    "answer": 1,
+    "level": "무식"
+  },
+  {
+    "question": "우리나라의 수도는?",
+    "choices": ["서울", "부산", "인천", "대전"],
+    "answer": 0,
+    "level": "무식"
+  },
+  {
+    "question": "물의 화학식은?",
+    "choices": ["CO2", "H2O", "O2", "NaCl"],
+    "answer": 1,
+    "level": "평범"
+  },
+  {
+    "question": "대한민국의 첫 대통령은?",
+    "choices": ["김대중", "박정희", "이승만", "윤보선"],
+    "answer": 2,
+    "level": "평범"
+  },
+  {
+    "question": "빛의 속도는 약 얼마인가?",
+    "choices": ["300,000km/s", "150,000km/s", "1,000km/s", "3,000km/s"],
+    "answer": 0,
+    "level": "박사"
+  },
+  {
+    "question": "피타고라스 정리는?",
+    "choices": ["a + b = c", "E = mc^2", "a^2 + b^2 = c^2", "F = ma"],
+    "answer": 2,
+    "level": "박사"
+  }
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+let questions = [];
+
+function startQuiz(level) {
+  questions = allQuestions.filter(q => q.level === level);
+  questions = shuffleArray(questions).slice(0, 5);
+  currentQuestionIndex = 0;
+  score = 0;
+  document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("quiz-screen").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestionIndex];
+  document.getElementById("question-box").innerText = `${currentQuestionIndex + 1}. ${q.question}`;
+  const choicesBox = document.getElementById("choices-box");
+  choicesBox.innerHTML = "";
+  q.choices.forEach((choice, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "btn";
+    btn.innerText = choice;
+    btn.onclick = () => handleAnswer(idx);
+    choicesBox.appendChild(btn);
+  });
+}
+
+function handleAnswer(selectedIdx) {
+  if (selectedIdx === questions[currentQuestionIndex].answer) {
+    score++;
+  }
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    endQuiz();
+  }
+}
+
+function endQuiz() {
+  document.getElementById("quiz-screen").classList.add("hidden");
+  document.getElementById("result-screen").classList.remove("hidden");
+  document.getElementById("result-text").innerText = score === 5
+    ? "🎉 모든 문제를 맞췄어요! 클리어!"
+    : `총 ${score}문제 맞췄어요! 다시 도전해보세요!`;
+  setTimeout(restartQuiz, 10000); // 10초 후 재시작
+}
+
+function restartQuiz() {
+  document.getElementById("result-screen").classList.add("hidden");
+  document.getElementById("start-screen").classList.remove("hidden");
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+  </script>
+</body>
+</html>
