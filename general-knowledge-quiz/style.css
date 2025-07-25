@@ -45,6 +45,12 @@ body {
   font-weight: bold;
 }
 
+#choices-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
 .hidden {
   display: none;
 }

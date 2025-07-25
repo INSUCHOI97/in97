@@ -10,13 +10,13 @@
   <div class="container">
     <h1>상식 퀴즈</h1>
     <div id="start-screen">
-      <button class="btn" onclick="startQuiz('무식')">무식</button>
-      <button class="btn" onclick="startQuiz('평범')">평범</button>
-      <button class="btn" onclick="startQuiz('박사')">박사</button>
+      <button class="btn level" onclick="startQuiz('무식')">무식</button>
+      <button class="btn level" onclick="startQuiz('평범')">평범</button>
+      <button class="btn level" onclick="startQuiz('박사')">박사</button>
     </div>
     <div id="quiz-screen" class="hidden">
       <div id="question-box"></div>
-      <div id="choices-box"></div>
+      <div id="choices-box" class="choices-grid"></div>
     </div>
     <div id="result-screen" class="hidden">
       <h2 id="result-text"></h2>
@@ -25,42 +25,12 @@
   </div>
   <script>
 const allQuestions = [
-  {
-    "question": "지구에서 가장 큰 대륙은?",
-    "choices": ["아프리카", "아시아", "유럽", "남아메리카"],
-    "answer": 1,
-    "level": "무식"
-  },
-  {
-    "question": "우리나라의 수도는?",
-    "choices": ["서울", "부산", "인천", "대전"],
-    "answer": 0,
-    "level": "무식"
-  },
-  {
-    "question": "물의 화학식은?",
-    "choices": ["CO2", "H2O", "O2", "NaCl"],
-    "answer": 1,
-    "level": "평범"
-  },
-  {
-    "question": "대한민국의 첫 대통령은?",
-    "choices": ["김대중", "박정희", "이승만", "윤보선"],
-    "answer": 2,
-    "level": "평범"
-  },
-  {
-    "question": "빛의 속도는 약 얼마인가?",
-    "choices": ["300,000km/s", "150,000km/s", "1,000km/s", "3,000km/s"],
-    "answer": 0,
-    "level": "박사"
-  },
-  {
-    "question": "피타고라스 정리는?",
-    "choices": ["a + b = c", "E = mc^2", "a^2 + b^2 = c^2", "F = ma"],
-    "answer": 2,
-    "level": "박사"
-  }
+  {"question":"지구에서 가장 큰 대륙은?","choices":["아프리카","아시아","유럽","남아메리카"],"answer":1,"level":"무식"},
+  {"question":"우리나라의 수도는?","choices":["서울","부산","인천","대전"],"answer":0,"level":"무식"},
+  {"question":"물의 화학식은?","choices":["CO2","H2O","O2","NaCl"],"answer":1,"level":"평범"},
+  {"question":"대한민국의 첫 대통령은?","choices":["김대중","박정희","이승만","윤보선"],"answer":2,"level":"평범"},
+  {"question":"빛의 속도는 약 얼마인가?","choices":["300,000km/s","150,000km/s","1,000km/s","3,000km/s"],"answer":0,"level":"박사"},
+  {"question":"피타고라스 정리는?","choices":["a + b = c","E = mc^2","a^2 + b^2 = c^2","F = ma"],"answer":2,"level":"박사"}
 ];
 
 let currentQuestionIndex = 0;
@@ -73,6 +43,7 @@ function startQuiz(level) {
   currentQuestionIndex = 0;
   score = 0;
   document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("result-screen").classList.add("hidden");
   document.getElementById("quiz-screen").classList.remove("hidden");
   showQuestion();
 }
@@ -84,7 +55,7 @@ function showQuestion() {
   choicesBox.innerHTML = "";
   q.choices.forEach((choice, idx) => {
     const btn = document.createElement("button");
-    btn.className = "btn";
+    btn.className = "btn choice";
     btn.innerText = choice;
     btn.onclick = () => handleAnswer(idx);
     choicesBox.appendChild(btn);
@@ -113,6 +84,7 @@ function endQuiz() {
 }
 
 function restartQuiz() {
+  document.getElementById("quiz-screen").classList.add("hidden");
   document.getElementById("result-screen").classList.add("hidden");
   document.getElementById("start-screen").classList.remove("hidden");
 }
